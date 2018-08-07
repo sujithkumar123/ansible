@@ -1,0 +1,40 @@
+---
+- host: webserver
+  become: sudo
+  tasks:
+  - name: create directory
+    file:
+      dest: /home/sujith/ansible/dev1
+      state: directory
+  
+  - name: download free website
+    get_url:
+      url: http://www.free-css.com/assets/files/free-css-templates/download/page217/resi.zip
+      dest: /home/devmahesh/ansible
+
+  - name: install unzip
+    apt:
+      name: unzip
+      update_cache: yes
+      state: present
+   - name: unzip the file
+     unarchive:
+        src: /home/devmahesh/ansible/resi.zip
+        dest: /home/devmahesh/ansible/sampleweb
+        remote_src: yes
+
+   - name: delete file
+     file:
+       path: /var/www/html/index.html
+       state: absent
+
+    - name: copy the contents
+      file:
+       src: /home/devmahesh/ansible/sampleweb/resi
+       dest: /var/www/html
+    
+    - name: Restar the apache server
+      service:
+        name: apache2
+        state: restarted
+
