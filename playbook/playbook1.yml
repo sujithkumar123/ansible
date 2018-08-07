@@ -1,0 +1,25 @@
+---
+- host: web1
+  become: true
+  tasks:
+  - name: install apache
+    apt:
+      name: apache2
+      update_cache: yes
+      state: present
+
+   - name: delete indexhtml
+     file:
+       path: /var/www/html/index.html
+       state: absent
+
+
+   - name: addwebpage to wep1
+     copy:
+       src: /home/sujith/devops/new
+       dest: /var/www/html
+   - name: restart apache server
+     service:
+       name: apache2
+       state: restarted
+
