@@ -1,0 +1,45 @@
+---
+- host: web3
+  become: sudo 
+  tasks: 
+  - name: download the file
+    get_url: 
+      url: http:// tomcat.tar.gz
+      dest: /home/devops/
+
+  - name: name install unzip
+    apt:
+      name: unzip
+      update_cache: yes
+      state: present
+
+
+  - name: extract archive 
+    unarchive:
+      src: /home/praveen/ansible/apache-tomcat.targ.z
+      dest: /home/praveen/ansible/sujith
+      remote_src: yes
+
+   - name: delete file
+     file:
+       path: /home/praveen/ansible/tomcat/conf/server.xml
+       state: absent
+   - name: copy the contents
+     copy:
+       src: /home/praveen/ansible/server.xml
+       dest: /home/praveen/ansible/tomcat/conf/
+   - name: delete file
+     file:
+       path: /home/praveen/ansible/tomct/conf/tomcat-user.xml
+       state: present
+
+   - name: copy the contents
+          copy:
+            src: /home/praveen/ansible/tomcat-user.xml
+            dest: /home/praveen/ansible/tomcat/conf/
+   - name: restart apache
+     service:
+      name: apache2
+      state: restarted
+                                     
+                                       
