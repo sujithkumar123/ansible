@@ -1,0 +1,14 @@
+---
+- host: web1
+  become: true
+  tasks:
+  - name: copy.war form nexus to partcular server
+    get_url:
+      url:  http:// 54.71.152.84:8081/nexus/content/repositores/gameoflife/{{group_id}}/{{BUILD_TIMESTAMP}}/{{BUILD_ID}}/{{my_version}}
+      dest: /home/praveen
+  - name: copy .war from nexus to tomcat
+    get_url:
+      url: httt http:// 54.71.152.84:8081/nexus/content/repositores/gameoflife/{{group_id}}/{{BUILD_TIMESTAMP}}/{{BUILD_ID}}/{{my_version}}
+      dest: /home/praveen/tomcat/apache-tomcat-7.0.82/webapps
+
+
