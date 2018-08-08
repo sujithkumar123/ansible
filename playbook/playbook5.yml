@@ -1,0 +1,24 @@
+---
+- host: web5
+  become: true
+  tasks:
+  - name: server helath check
+    shell:  ping -c -2 -w 5 &1 //www.google.com
+            if [ $? -eq 0 ]
+            then
+            echo "server is a live"
+            else
+              echo "this was a good service It's not good" 
+
+  - name: services status
+    command: systemctl status {{ item }}
+    with_items:
+            - firewalld
+            - failn2ban
+            - opennebula
+
+
+     register: result
+
+     -debug: 
+        var: result
